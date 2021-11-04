@@ -53,9 +53,45 @@ const goods = (callback) => {
 
     function goods_delete(cb) {
         options.method = 'DELETE';
-        options.path = '/goods?id=3';
+        options.path = '/goods?id=6';
         request(cb);
     }
 }
 
-goods(() => console.log('goods api test success'));
+const members = (callback) => {
+    memebers_post(() => {
+        memebers_get(() => {
+            memebers_delete(callback);
+        });
+    });
+
+    function memebers_post(cb) {
+        options.method = 'POST';
+        options.path = '/members';
+        request(cb, {
+            username: 'username',
+            password: 'password',
+            passwordConfirm: 'password',
+        });
+    }
+
+    function memebers_get(cb) {
+        options.method = 'GET';
+        options.path = '/members?username=username&password=password';
+        request(cb);
+    }
+
+    function memebers_delete(cb) {
+        options.method = 'DELETE';
+        options.path = '/members?username=username';
+        request(cb);
+    }
+}
+
+
+goods(() => {
+    console.log('goods api test success');
+    members(() => {
+        console.log('members api test success');
+    });
+});

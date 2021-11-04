@@ -7,6 +7,8 @@ const conn = {
 };
 
 const register = (method, pathname, params, cb) => {
+    console.log('_____members register_____');
+
     const response = {
         key: params.key,
         errorCode: 0,
@@ -21,7 +23,7 @@ const register = (method, pathname, params, cb) => {
         const connection = mysql.createConnection(conn);
         connection.connect();
         connection.query(
-            "insert into members(username, password)  values(?, ?)",
+            "insert into members(username, password) values(?, ?)",
             [params.username, params.password],
             (error, results, fields) => {
                 if(error) {
@@ -35,6 +37,8 @@ const register = (method, pathname, params, cb) => {
 };
 
 const inquiry = (method, pathname, params, cb) => {
+    console.log('_____members inquiry_____');
+
     const response = {
         key: params.key,
         errorCode: 0,
@@ -44,7 +48,8 @@ const inquiry = (method, pathname, params, cb) => {
     const connection = mysql.createConnection(conn);
     connection.connect();
     connection.query(
-        `select id from members where username = "${params.username}" and password = "${params.password}"`,
+        `select id from members where username = ? and password = ?`,
+        [params.username, params.password],
         (error, results, fields) => {
         if(error || !results.length) {
             response.errorCode = 1;
@@ -58,6 +63,8 @@ const inquiry = (method, pathname, params, cb) => {
 };
 
 const unregister = (method, pathname, params, cb) => {
+    console.log('_____members unregister_____');
+
     const response = {
         key: params.key,
         errorCode: 0,
