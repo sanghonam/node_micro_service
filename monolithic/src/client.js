@@ -13,10 +13,12 @@ const request = (cb, params) => {
         let data = '';
 
         res.on('data', chunk => {
+            console.log(chunk);
+            data += chunk;
         });
 
-        res.on('end', (aaaa) => {
-            cb();
+        res.on('end', () => {
+            cb(data);
         });
     })
 
@@ -88,10 +90,34 @@ const members = (callback) => {
     }
 }
 
+const purchases = (callback) => {
+    purchases_post(() => {
+        purchases_get(callback);
+    });
+
+    function purchases_post(cb) {
+        options.method = 'POST';
+        options.path = '/purchases';
+        request(cb, {
+            userid: 1,
+            goodsid: 1,
+        });
+    }
+
+    function purchases_get(cb) {
+        options.method = 'GET';
+        options.path = '/purchases?userid=1';
+        request(cb);
+    }
+}
 
 goods(() => {
     console.log('goods api test success');
     members(() => {
         console.log('members api test success');
+        purchases(() => {
+            console.log('purchases api test success');
+        })
     });
 });
+

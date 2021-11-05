@@ -22,7 +22,7 @@ const register = (method, pathname, params, cb) => {
         const connection = mysql.createConnection(conn);
         connection.connect();
         connection.query(
-            "insert into members(username, password)  values(?, ?)",
+            "insert into purchases(userid, goodsid)  values(?, ?)",
             [params.userid, params.goodsid],
             (error, results, fields) => {
                 if(error) {
@@ -50,7 +50,7 @@ const inquiry = (method, pathname, params, cb) => {
         const connection = mysql.createConnection(conn);
         connection.connect();
         connection.query(
-            `select id from members where userid = ?`,
+            `select id from purchases where userid = ?`,
             [params.userid],
             (error, results, fields) => {
             if(error || !results.length) {

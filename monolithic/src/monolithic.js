@@ -61,6 +61,8 @@ const onRequest = (res, method, pathname, params) => {
  * @param packet    결과 파라미터
  */
 const response = (res, packet) => {
+    console.log('response : ', res);
+    console.log('packet : ', packet);
     res.writeHead(200, { 'Content-Type' : 'application/json' });
     res.end(JSON.stringify(packet));
 }
